@@ -70,7 +70,7 @@ def finalFunction(url):
     keywordList =final_words(keywordList)
     #print(websiteList)
     #print(keywordList)
-    data_set = {"Keywords": keywordList, "websites": websiteList}
+    data_set = {"keywords": keywordList, "websites": websiteList}
 
     json_dump = json.dumps(data_set)
     return data_set
