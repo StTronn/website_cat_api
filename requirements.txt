@@ -5,13 +5,17 @@ certifi==2020.4.5.1
 chardet==3.0.4
 click==7.1.1
 docutils==0.15.2
+Flask==1.1.2
 gensim==3.8.2
 html2text==2020.1.16
 idna==2.9
 inscriptis==1.0
+itsdangerous==1.1.0
+Jinja2==2.11.2
 jmespath==0.9.5
 joblib==0.14.1
 lxml==4.5.0
+MarkupSafe==1.1.1
 nltk==3.5
 numpy==1.18.3
 pandas==1.0.3
@@ -28,3 +32,4 @@ six==1.14.0
 smart-open==1.11.1
 tqdm==4.45.0
 urllib3==1.25.9
+Werkzeug==1.0.1
