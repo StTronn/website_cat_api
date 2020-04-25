@@ -5,7 +5,7 @@ from helper import load_obj
 
 
 EMBEDDING_FILE = 'GoogleNews-vectors-negative300.bin.gz'
-modelg= KeyedVectors.load_word2vec_format(EMBEDDING_FILE, binary=True,limit=1000)
+modelg= KeyedVectors.load_word2vec_format(EMBEDDING_FILE, binary=True,limit=400000)
 
 url='https://raw.githubusercontent.com/Pratikmehta1729/walkover/master/eng_sites_dataset_2.0_shuffled.csv'
 
@@ -35,4 +35,3 @@ labels=load_obj("labels")
 centroids=load_obj("centroids")
 final_dict=load_obj("final_dict")
 
-print(kmeans)

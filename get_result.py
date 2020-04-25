@@ -1,5 +1,5 @@
 from sklearn.neighbors import NearestNeighbors
-from initialize import kmeans,X,labels,centroids,modelg,titles,l
+from server import kmeans,X,labels,centroids,modelg,titles,l
 from get_url import preprocess,get_text_content
 from helper import sent_vectorizer
 import json
@@ -36,17 +36,17 @@ def getIndexOfNearVectors(urlVector):
 
 def give_cluster(url):
   try:
-      print('URL name is :',url)
+      #print('URL name is :',url)
       # for key in final_dict.keys():
       #   for value in final_dict[key]:
       #     if(url==value):
       #       return key
 
       content = preprocess(get_text_content(url))
-      print("line 1")
+      #print("line 1")
       new_url_vector=sent_vectorizer(content,modelg)
-      print("line 2")
-      print(kmeans.predict([new_url_vector])[0])
+      #print("line 2")
+      #print(kmeans.predict([new_url_vector])[0])
       return kmeans.predict([new_url_vector])[0]
   except Exception as e:
       return e
@@ -57,6 +57,7 @@ def finalFunction(url):
     # url = input("Enter Url:")
     # url = "https://choithramschool.com/"
     ClusterNo = give_cluster(url)
+    print(ClusterNo)
     index = keyWordsOfCluster(ClusterNo)
     keywordList = []
     websiteList=[]
@@ -67,15 +68,14 @@ def finalFunction(url):
     for i in range(len(index[0])):
       keywordList.append(l[index[0][i]])
     keywordList =final_words(keywordList)
-    print(websiteList)
-    print(keywordList)
+    #print(websiteList)
+    #print(keywordList)
     data_set = {"Keywords": keywordList, "websites": websiteList}
 
     json_dump = json.dumps(data_set)
-    print(json_dump)
+    return data_set
 
   except Exception as e:
-        print('ERROR_MSG',e)
-        return e
-
-finalFunction('https://www.google.com/')
+        #print('ERROR_MSG',e)
+        data_set={"keywords":[],"websites":[]}
+        return data_set
