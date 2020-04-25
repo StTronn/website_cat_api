@@ -2,6 +2,7 @@
 #cluster is stored in sites_50_google.cluster
 #for the function to work we will require the google model also
 import pickle
+import numpy as np
 
 def read_cluster(filename=''):
   with open('sites_50_google.cluster', 'rb') as cluster_file:
@@ -14,9 +15,10 @@ def load_kmeans():
     return kmeans
 
 def load_obj(filename):
-  with open(filename,'rb') as obj_file
+  with open(filename,'rb') as obj_file:
     obj = pickle.load(obj_file)
     return obj
+
 
 def sent_vectorizer(sent, modelg):
 
@@ -32,4 +34,4 @@ def sent_vectorizer(sent, modelg):
             numw+=1
         except:
             pass
-    return np.asarray(sent_vec) / num
+    return np.asarray(sent_vec) / numw
