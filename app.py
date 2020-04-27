@@ -1,5 +1,5 @@
 from flask import Flask
-from initialize import kmeans,X,labels,centroids,modelg,titles,l
+#from initialize import kmeans,X,labels,centroids,modelg,titles,l
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
@@ -11,7 +11,7 @@ app.config['CORS_HEADERS'] = '*'
 @app.route('/')
 @cross_origin()
 def result_url(url=''):
-    return finalFunction(url)
+    return "hello world"
 
 if __name__ == '__main__':
     app.run()
