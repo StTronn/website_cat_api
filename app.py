@@ -1,5 +1,5 @@
 from flask import Flask
-#from initialize import kmeans,X,labels,centroids,modelg,titles,l
+from initialize import kmeans,X,labels,centroids,modelg,titles,l
 from flask_cors import CORS, cross_origin
 
 print("in app")
