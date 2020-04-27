@@ -2,6 +2,8 @@ from flask import Flask
 from initialize import kmeans,X,labels,centroids,modelg,titles,l
 from flask_cors import CORS, cross_origin
 
+print("in app")
+
 app = Flask(__name__)
 from get_result import finalFunction
 cors = CORS(app)
