@@ -8,6 +8,7 @@ docutils==0.15.2
 Flask==1.1.2
 Flask-Cors==3.0.8
 gensim==3.8.2
+gunicorn==20.0.4
 html2text==2020.1.16
 idna==2.9
 inscriptis==1.0
