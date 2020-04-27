@@ -5,7 +5,7 @@ from flask_cors import CORS, cross_origin
 print("in app")
 
 app = Flask(__name__)
-#from get_result import finalFunction
+from get_result import finalFunction
 cors = CORS(app)
 app.config['CORS_HEADERS'] = '*'
 
@@ -13,7 +13,7 @@ app.config['CORS_HEADERS'] = '*'
 @app.route('/')
 @cross_origin()
 def result_url(url=''):
-    return "hello world"
+    return finalFunction(url)
 
 if __name__ == '__main__':
     app.run()
