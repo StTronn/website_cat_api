@@ -11,7 +11,7 @@ def load_obj(filename):
 
 print("loading model")
 EMBEDDING_FILE = 'https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz'
-modelg= KeyedVectors.load_word2vec_format(EMBEDDING_FILE, binary=True,limit=40000)
+modelg= load_obj('modelg')
 print("model loaded")
 
 url='https://raw.githubusercontent.com/Pratikmehta1729/walkover/master/eng_sites_dataset_2.0_shuffled.csv'
