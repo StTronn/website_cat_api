@@ -1,5 +1,5 @@
 from sklearn.neighbors import NearestNeighbors
-from server import kmeans,X,labels,centroids,modelg,titles,l
+from __main__ import kmeans,X,labels,centroids,modelg,titles,l
 from get_url import preprocess,get_text_content
 from helper import sent_vectorizer
 import json
