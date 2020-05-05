@@ -6,6 +6,8 @@ from sklearn import cluster,metrics
 import gensim.downloader as api
 from urllib.parse import urlparse
 import scipy
+from server import y,z,centroid_no,modelg,X
+
 def load_obj(filename):
   with open(filename,'rb') as obj_file:
     obj = pickle.load(obj_file)
@@ -13,8 +15,7 @@ def load_obj(filename):
 
 
 
-def read_csv(csv_url):
-    df = pd.read_csv(csv_url)
+def read_csv(df):
     sentences=[]
     x=df.content.tolist()
     y=df.url.tolist()
@@ -65,17 +66,18 @@ def search_by_query(query,centroid_no=-1,no_of_results=20):
     vectors,urls,ranks,centroid_num=get_centroid_websites(centroid_no)
     query_vector=sent_vectorizer(query,modelg)
     similarity=[]
-    try:
-     similarity=[scipy.spatial.distance.cosine(query_vector,x) for x in vectors]
-    except:
-      pass
+    for x in vectors:
+      try:
+          dist=scipy.spatial.distance.cosine(query_vector,x)
+          similarity.append(dist)
+      except:
+        pass
     top_idx = np.argsort(similarity)[0:no_of_results]
     top_url= [[urls[i],ranks[i],similarity[i]] for i in top_idx]
     rank_list=[(0.5*t[1])+(0.5*t[2]) for t in top_url]
     top_rank_idx = np.argsort(rank_list)
     final_rank=[top_url[i][0] for i in top_rank_idx]
     return final_rank
-
 
 
 def search_by_domain(query_domain,centroid_no=-1):
@@ -92,11 +94,5 @@ def search_by_domain(query_domain,centroid_no=-1):
 
 
 
-modelg = load_obj('modelg')
-
-csv_url="https://github.com/StTronn/website_cat_api/raw/master/websites_data_csv.zip"
-sentences,y,z,centroid_no=read_csv(csv_url)
-X=create_vector(sentences)
 
 
-print(search_by_query(["search"]))

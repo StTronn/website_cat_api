@@ -35,3 +35,13 @@ def sent_vectorizer(sent, modelg):
         except:
             pass
     return np.asarray(sent_vec) / numw
+
+
+def read_csv(df):
+    sentences=[]
+    y=df.url.tolist()
+    z=df['rank'].tolist()
+    c=df.centroid_no.tolist()
+    return sentences,y,z,c
+
+
