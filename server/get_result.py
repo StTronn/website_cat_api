@@ -18,8 +18,9 @@ def final_words(listoflist):
   res = list(newDict.keys())[:10]
   return res
 
-def getVectorOfUrl(content):
+def getVectorOfUrl(url):
   try:
+      content = preprocess(get_text_content(url))
       return sent_vectorizer(content,modelg)
   except Exception as e:
       return e
@@ -33,7 +34,7 @@ def getIndexOfNearVectors(urlVector):
   except Exception as e:
     return e
 
-def give_cluster(content):
+def give_cluster(url):
   try:
       #print('URL name is :',url)
       # for key in final_dict.keys():
@@ -41,6 +42,7 @@ def give_cluster(content):
       #     if(url==value):
       #       return key
 
+      content = preprocess(get_text_content(url))
       #print("line 1")
       new_url_vector=sent_vectorizer(content,modelg)
       #print("line 2")
@@ -54,13 +56,12 @@ def finalFunction(url):
   try:
     # url = input("Enter Url:")
     # url = "https://choithramschool.com/"
-    content=get_text_content(url)
-    ClusterNo = give_cluster(content)
+    ClusterNo = give_cluster(url)
     print(ClusterNo)
     index = keyWordsOfCluster(ClusterNo)
     keywordList = []
     websiteList=[]
-    urlVector = getVectorOfUrl(content)
+    urlVector = getVectorOfUrl(url)
     indexOfNearWebsites = getIndexOfNearVectors(urlVector)
     for i in range(len(indexOfNearWebsites[0])):
       websiteList.append(titles[indexOfNearWebsites[0][i]])
