@@ -38,10 +38,10 @@ def sent_vectorizer(sent, modelg):
 
 
 def read_csv(df):
-    sentences=[]
+    df=df.head(50000)
     y=df.url.tolist()
     z=df['rank'].tolist()
     c=df.centroid_no.tolist()
-    return sentences,y,z,c
+    return y,z,c
 
 

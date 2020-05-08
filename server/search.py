@@ -15,16 +15,6 @@ def load_obj(filename):
 
 
 
-def read_csv(df):
-    sentences=[]
-    x=df.content.tolist()
-    y=df.url.tolist()
-    z=df['rank'].tolist()
-    c=df.centroid_no.tolist()
-    for item in x:
-        sentences.append(item.split())
-    return sentences,y,z,c
-
 
 def sent_vectorizer(sent, modelg):
     sent_vec =[]

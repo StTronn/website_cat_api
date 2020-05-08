@@ -5,14 +5,15 @@ from server.helper import read_csv
 from server.initialize import kmeans,labels,centroids,modelg,titles,l,X
 from flask_cors import CORS, cross_origin
 import json
+import urllib.parse
 
 print("in app")
 
 
 print("loading search engine")
-csv_url="websites_data_csv.zip"
+csv_url="websites_data.csv"
 sites_df=pd.read_csv(csv_url)
-sentences,y,z,centroid_no=read_csv(sites_df)
+y,z,centroid_no=read_csv(sites_df)
 print("loaded search engine")
 
 app = Flask(__name__)
@@ -44,9 +45,11 @@ def get_cluster_url(centroid_no=-1,page_no=1):
 @app.route('/search/query/<q>')
 @cross_origin()
 def query_search(q):
-    return json.dumps(search_by_query([q]))
+    q=urllib.parse.unquote(q).split(" ")
+    return json.dumps(search_by_query(q))
 
 @app.route('/search/domain/<q>')
 @cross_origin()
 def domain_search(q):
-    return json.dumps(search_by_domain([q]))
+    q=urllib.parse.unquote(q).split(" ")
+    return json.dumps(search_by_domain(q))
