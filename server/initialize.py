@@ -14,7 +14,7 @@ print("kmeans loaded")
 modelg=load_obj("modelg50")
 print("modelg50 loaded")
 
-def sent_vectorizer(sent, modelg):
+def sent_vectorizer(sent, modelg=modelg):
     print("sent vectorizer function called")
     try:
         sent_vec =[]
@@ -32,6 +32,6 @@ def sent_vectorizer(sent, modelg):
         return np.asarray(sent_vec) / numw
     except Exception as e:
         print("Sent Vectorizer Error",e)
-        return e    
+        return e
 
 

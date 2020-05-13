@@ -6,7 +6,7 @@ from flask_cors import CORS, cross_origin
 import server.initialize
 import json
 import urllib.parse
-
+from server.helper import get_cluster_sites
 print("in app")
 
 
@@ -18,7 +18,7 @@ print("loaded search engine")
 
 app = Flask(__name__)
 from server.get_result import finalFunction
-#from server.search import search_by_query,search_by_domain
+from server.search import search_by_query,search_by_domain,get_cluster_websites
 cors = CORS(app)
 app.config['CORS_HEADERS'] = '*'
 
@@ -34,22 +34,17 @@ def result_url(url=''):
 @app.route('/getclusterurl/')
 @cross_origin()
 def get_cluster_url(centroid_no=-1,page_no=1):
-    limit = len(sites_df)
-    start = (page_no-1)*10
-    end=page_no*10
-    if centroid_no<0 or centroid_no >100:
-        return json.dumps(sites_df[start:end][['rank','url']].to_dict('records'))
-    cluster_df=sites_df[sites_df.centroid_no==centroid_no]
-    return json.dumps(cluster_df[start:end][['rank','url']].to_dict('records'))
+    return json.dumps(get_cluster_sites(centroid_no))
 
-#@app.route('/search/query/<q>')
-#@cross_origin()
-#def query_search(q):
-#    q=urllib.parse.unquote(q).split(" ")
-#    return json.dumps(search_by_query(q))
-#
-#@app.route('/search/domain/<q>')
-#@cross_origin()
-#def domain_search(q):
-#    q=urllib.parse.unquote(q).split(" ")
-#    return json.dumps(search_by_domain(q))
+@app.route('/search/query/<q>/clusterno/<int:cluster_no>')
+@app.route('/search/query/<q>')
+@cross_origin()
+def query_search(q,cluster_no=-1):
+    q=urllib.parse.unquote(q).split(" ")
+    return json.dumps(search_by_query(q,cluster_no))
+
+@app.route('/search/domain/<q>')
+@cross_origin()
+def domain_search(q):
+    q=urllib.parse.unquote(q).split(" ")
+    return json.dumps(search_by_domain(q))

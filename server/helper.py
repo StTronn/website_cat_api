@@ -3,6 +3,7 @@
 #for the function to work we will require the google model also
 import pickle
 import numpy as np
+import sqlite3
 
 def read_cluster(filename=''):
   with open('sites_50_google.cluster', 'rb') as cluster_file:
@@ -44,4 +45,22 @@ def read_csv(df):
     c=df.centroid_no.tolist()
     return y,z,c
 
-
+def get_cluster_sites(cluster_no=-1):
+    conn = sqlite3.connect("server/database/web.db")
+    cur = conn.cursor()
+    urls=[]
+    ranks=[]
+    ret=[]
+    if cluster_no==-1:
+        cur.execute("SELECT * FROM data LIMIT 100000")
+    else:
+        cur.execute("SELECT * FROM data where cluster_no=?",(str(cluster_no)))
+    rows = cur.fetchall()
+    print("data fetched..")
+    print("calculating..")
+    for row in rows:
+        o={}
+        o['url']=row[1]
+        o['rank']=row[5]
+        ret.append(o)
+    return ret[:20]
