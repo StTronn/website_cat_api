@@ -1,44 +1,37 @@
-from gensim.models import Word2Vec,KeyedVectors
-import pandas as pd
 import pickle
-
+import numpy as np
 def load_obj(filename):
-  with open(filename,'rb') as obj_file:
+  with open('server/Dump_obj/'+filename,'rb') as obj_file:
     obj = pickle.load(obj_file)
     return obj
 
-
-
-print("loading model")
-EMBEDDING_FILE = 'https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz'
-modelg= load_obj('modelg')
-print("model loaded")
-
-url='https://raw.githubusercontent.com/Pratikmehta1729/walkover/master/eng_sites_dataset_2.0_shuffled.csv'
-
-
-#get titles,l,title_map
-df = pd.read_csv(url)
-l=[]
-titles=[]
-y=df.title.tolist()
-x=df.text.tolist()
-
-title_map={}
-count=0
-for title in y:
-  title_map[title]=count
-  titles.append(title)
-  count+=1
-
-for item in x:
-    l.append(item.split())
-
-sentences = l
+def store_object(obj,filename):
+  with open(filename,'wb') as obj_file:
+    pickle.dump(obj,obj_file)
 
 kmeans=load_obj("kmeans")
-X=load_obj("X")
-labels=load_obj("labels")
-centroids=load_obj("centroids")
-final_dict=load_obj("final_dict")
+print("kmeans loaded")
+modelg=load_obj("modelg50")
+print("modelg50 loaded")
+
+def sent_vectorizer(sent, modelg):
+    print("sent vectorizer function called")
+    try:
+        sent_vec =[]
+        numw = 0
+        for w in sent:
+
+            try:
+                if numw == 0:
+                    sent_vec = modelg[w]
+                else:
+                    sent_vec = np.add(sent_vec, modelg[w])
+                numw+=1
+            except:
+                pass
+        return np.asarray(sent_vec) / numw
+    except Exception as e:
+        print("Sent Vectorizer Error",e)
+        return e    
+
 

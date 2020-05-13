@@ -1,81 +1,120 @@
 from sklearn.neighbors import NearestNeighbors
-from server import kmeans,X,labels,centroids,modelg,titles,l
-from server.get_url import preprocess,get_text_content
-from server.helper import sent_vectorizer
+from datetime import date
+from datetime import timedelta 
+import sqlite3
+from server.initialize import kmeans,modelg,sent_vectorizer
+from server.get_url import preprocess,get_text_content,get_content
 import json
+#need to bring exact correct kmeans and wb.db accoringly and trends.db accordingly
 
 def keyWordsOfCluster(clusterNo):
-  neigh = NearestNeighbors(5)
-  neigh.fit(X)
-  index = neigh.kneighbors([centroids[clusterNo]], 5, return_distance=False)
-  return index
+  keywords=[]
+  conn = sqlite3.connect('server/database/trends.db')
+  #need to change day to date_p in next line remember
+  # remeber to change query for that day not day before
+  cursor = conn.execute("SELECT c"+str(clusterNo)+" from KEYWORDS where Day='"+str(date.today() - timedelta(days = 1))+"'")
+  for row in cursor:
+    keywords=(row[0].split())
+  conn.close()
+  return keywords
+  # return []
 
-def final_words(listoflist):
-  l = [item for sublist in listoflist for item in sublist]
-  wordfreq=[l.count(p) for p in l]
-  mydict=dict(zip(l,wordfreq))
-  newDict={k: v for k, v in sorted(mydict.items(), key=lambda item: item[1],reverse=True)}
-  res = list(newDict.keys())[:10]
-  return res
-
-def getVectorOfUrl(url):
+def getIndexOfNearVectors(urlVector,vectors):
   try:
-      content = preprocess(get_text_content(url))
-      return sent_vectorizer(content,modelg)
-  except Exception as e:
-      return e
 
-def getIndexOfNearVectors(urlVector):
-  try:
     neigh = NearestNeighbors(2, 0.4)
-    neigh.fit(X)
-    index = neigh.kneighbors([urlVector], 10, return_distance=False)
+    neigh.fit(vectors)
+    # change this near vector from 5 to 10
+    index = neigh.kneighbors([urlVector], 5, return_distance=False)
     return index
   except Exception as e:
+    print("getIndexOfNearVectors",e)
     return e
 
-def give_cluster(url):
-  try:
-      #print('URL name is :',url)
-      # for key in final_dict.keys():
-      #   for value in final_dict[key]:
-      #     if(url==value):
-      #       return key
+def sToVec(vectorstr):
+  vectors=[]
+  lst = [float(x) for x in vectorstr.split()]
+  return lst
 
-      content = preprocess(get_text_content(url))
-      #print("line 1")
-      new_url_vector=sent_vectorizer(content,modelg)
-      #print("line 2")
-      #print(kmeans.predict([new_url_vector])[0])
-      return kmeans.predict([new_url_vector])[0]
+
+def getAllVecorsOfCluster(clusterno):
+  urlsVectors=[]
+  urls=[]
+  # Need to fetch url,vector from db and again convet that vector str to vector
+  
+  conn = sqlite3.connect('server/database/web.db')
+  cursor = conn.execute("SELECT url,embedding from data where cluster_no=?",(str(clusterno)))
+  for row in cursor:
+    # keywords=(row[0].split())
+    urls.append(row[0])
+    urlsVectors.append(sToVec(row[1]))
+  conn.close()
+  #
+  #    
+  return dict({"vectors":urlsVectors,"urls":urls})
+
+def getNearWebsites(urls,indexOfNearWebsites):
+  websiteList=[]
+  for i in range(len(indexOfNearWebsites[0])):
+      websiteList.append(urls[indexOfNearWebsites[0][i]])
+  return websiteList
+
+def checkUrlInDb(url):
+  try:
+    conn = sqlite3.connect('server/database/web.db')
+    cursor = conn.execute("SELECT cluster_no,embedding from data where url='"+str(url)+"'")
+    for row in cursor:
+      cluster_no=row[0]
+      new_url_vector=sToVec(row[1])
+    return dict({"cluster_no":cluster_no,"new_url_vector":new_url_vector})
   except Exception as e:
+      print("check url info err msg",e)
+      return dict({"cluster_no":0,"new_url_vector":[]})  
+
+def giveUrlInfo(url):
+  try:
+      urlInfo = checkUrlInDb(url)
+      if(len(urlInfo['new_url_vector'])!=0):
+        print("url in databse")
+        cluster_no = urlInfo['cluster_no']
+        new_url_vector = urlInfo['new_url_vector'] 
+      else:
+        print("url not in database")
+        content = preprocess(get_text_content(url))
+        new_url_vector=sent_vectorizer(content,modelg)
+        cluster_no=kmeans.predict([new_url_vector])[0]
+        print("cluster",cluster_no)
+      # print("cluster_no")
+      # print(new_url_vector)  
+      return dict({"cluster_no":cluster_no,"urlvector":new_url_vector})
+  except Exception as e:
+      print('giveUrlInfo error',e)
       return e
-      # print('ERROR_MSG',e)
+      
 
 def finalFunction(url):
   try:
-    # url = input("Enter Url:")
-    # url = "https://choithramschool.com/"
-    ClusterNo = give_cluster(url)
-    print(ClusterNo)
-    index = keyWordsOfCluster(ClusterNo)
-    keywordList = []
-    websiteList=[]
-    urlVector = getVectorOfUrl(url)
-    indexOfNearWebsites = getIndexOfNearVectors(urlVector)
-    for i in range(len(indexOfNearWebsites[0])):
-      websiteList.append(titles[indexOfNearWebsites[0][i]])
-    for i in range(len(index[0])):
-      keywordList.append(l[index[0][i]])
-    keywordList =final_words(keywordList)
+    urlInfo=giveUrlInfo(str(url))
+    ClusterNo = urlInfo['cluster_no']
+    urlVector = urlInfo['urlvector']
+    keywords = keyWordsOfCluster(ClusterNo)
+    
+    clusterVectors = getAllVecorsOfCluster(ClusterNo)
+    vectors=clusterVectors['vectors']
+    urls=clusterVectors['urls']
+
+    indexOfNearWebsites = getIndexOfNearVectors(urlVector,vectors)
+    nearWebsites=getNearWebsites(urls,indexOfNearWebsites)
+
     #print(websiteList)
     #print(keywordList)
-    data_set = {"keywords": keywordList, "websites": websiteList}
+    
+    data_set = {"keywords": keywords, "websites": nearWebsites}
 
     json_dump = json.dumps(data_set)
     return data_set
 
   except Exception as e:
-        #print('ERROR_MSG',e)
+        print('ERROR_MSG',e)
         data_set={"keywords":[],"websites":[]}
         return data_set
