@@ -10,12 +10,6 @@ from server.helper import get_cluster_sites
 print("in app")
 
 
-print("loading search engine")
-csv_url="websites_data.csv"
-sites_df=pd.read_csv(csv_url)
-y,z,centroid_no=read_csv(sites_df)
-print("loaded search engine")
-
 app = Flask(__name__)
 from server.get_result import finalFunction
 from server.search import search_by_query,search_by_domain,get_cluster_websites
