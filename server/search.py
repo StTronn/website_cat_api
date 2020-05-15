@@ -10,46 +10,61 @@ import scipy
 from server.initialize import sent_vectorizer
 import sqlite3
 
-def get_cluster_websites(query_vector,cluster_num=-1,):
-  conn = sqlite3.connect("server/database/web.db")
-  cur = conn.cursor()
-  urls=[]
-  ranks=[]
-  similarity=[]
-  if cluster_num==-1:
-      cur.execute("SELECT * FROM data LIMIT 100000")
-      print("data fetched..")
-      rows = cur.fetchall()
-      print("calculating..")
-      for row in rows:
-        urls.append(row[1])
-        ranks.append(row[5])
-        v=[float(x) for x in row[4].split()]
-        try:
-         similarity.append(scipy.spatial.distance.cosine(query_vector,v))
-        except:
-          pass
-      return urls,ranks,similarity
-  else:
-      cur.execute("SELECT * FROM data where cluster_no=?",(str(cluster_num)))
-      rows = cur.fetchall()
-      print("data fetched..")
-      print("calculating..")
-      for row in rows:
-        urls.append(row[1])
-        ranks.append(row[5])
-        v=[float(x) for x in row[4].split()]
-        try:
-          similarity.append(scipy.spatial.distance.cosine(query_vector,v))
-        except:
-          pass
-      return urls,ranks,similarity
+def get_all_vectors(cluster=None):
+  """ return  dictionary consist list of urls, and embeddings of given cluster,
+      in case of None it return vectors of all cluster """
 
+  query = "SELECT url, "
+  for i in range(50):
+    query += 'emb_d' + str(i)
+    if(i != 49): query += ', '
+  query += ' FROM global_data '
 
-def search_by_query(query,cluster_no=-1,no_of_results=20):
+  if(cluster is not None): query += 'WHERE cluster='+str(cluster)
+
+  try:
+
+    conn = sqlite3.connect("/content/drive/My Drive/Colab Notebooks/web_update.db")
+    cur = conn.cursor()
+    cursor = cur.execute(query)
+
+    urls, embedding = [], []
+
+    for row in cursor:
+      urls.append(row[0])
+      embedding.append(list(row[1:]))
+    return embedding
+  except sqlite3.Error as error:
+    print(error)
+
+  finally:
+    if (conn): conn.close()
+
+def search_by_query(query,cluster_no=None,no_of_results=20):
+    conn = sqlite3.connect("/content/drive/My Drive/Colab Notebooks/web_update.db")
+    cur = conn.cursor()
     query_vector=sent_vectorizer(query)
-    urls,ranks,similarity=get_cluster_websites(query_vector,cluster_no)
+    urls=[]
+    ranks=[]
+    similarity=[]
+    rows=[]
+    embedding =get_all_vectors(cluster_no)
+    k=0
+    if cluster_no==None:
+      cur.execute("SELECT url,rank_d1 FROM global_data LIMIT 10000")
+      rows = cur.fetchall()
+    else:
+      cur.execute("SELECT url,rank_d1 FROM global_data where cluster=?",(str(cluster_no),))
+      rows = cur.fetchall()
 
+    for row in rows:
+        urls.append(row[0])
+        ranks.append(row[1])
+        try:
+          similarity.append(scipy.spatial.distance.cosine(query_vector,embedding[k]))
+          k+=1
+        except:
+          print("error")
     print("fetching top sites...")
     rank_list=[]
     top_idx = np.argsort(similarity)[0:no_of_results]
@@ -63,22 +78,18 @@ def search_by_query(query,cluster_no=-1,no_of_results=20):
     final_rank=[{'url':top_urls[i]["url"],'rank':top_urls[i]["rank"]} for i in final_idx]
     return final_rank
 
-
-
-
 def search_by_domain(query_domain,no_of_results=50):
-      conn = sqlite3.connect("server/database/web.db")
-      cur = conn.cursor()
-      cur.execute("SELECT * FROM data")
-      rows = cur.fetchall()
-      urls=[]
-      ranks=[]
-      domains=[]
-      for i in range(len(rows)):
-        d=urlparse(rows[i][1]).netloc
+    conn = sqlite3.connect("/content/drive/My Drive/Colab Notebooks/web_update.db")
+    cur = conn.cursor()
+    cur.execute("SELECT url,rank_d30 FROM global_data")
+    rows = cur.fetchall()
+    domains=[]
+    for i in range(len(rows)):
+        d=urlparse(rows[i][0]).netloc
         for word in query_domain:
-          if word in d:
-            domains.append({"url":rows[i][1],"rank":rows[i][5]})
-      return domains[0:no_of_results]
+            if word in d:
+                domains.append({"url":rows[i][0],"rank":rows[i][1]})
+    return domains[0:no_of_results]
+
 
 print(search_by_query(["school"]))
