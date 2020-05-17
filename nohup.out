@@ -1,0 +1,142 @@
+unable to import 'smart_open.gcs', disabling that module
+kmeans loaded
+modelg50 loaded
+in app
+loading dictionary...
+loading words lemma...
+ * Serving Flask app "server" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+27.56.227.196 - - [16/May/2020 16:02:15] "[37mGET / HTTP/1.1[0m" 200 -
+27.56.227.196 - - [16/May/2020 16:02:18] "[37mGET /favicon.ico HTTP/1.1[0m" 200 -
+unable to import 'smart_open.gcs', disabling that module
+kmeans loaded
+modelg50 loaded
+in app
+loading dictionary...
+loading words lemma...
+ * Serving Flask app "server" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+27.56.227.196 - - [16/May/2020 16:37:25] "[37mGET / HTTP/1.1[0m" 200 -
+27.56.227.196 - - [16/May/2020 16:37:27] "[37mGET /favicon.ico HTTP/1.1[0m" 200 -
+unable to import 'smart_open.gcs', disabling that module
+kmeans loaded
+modelg50 loaded
+in app
+loading dictionary...
+loading words lemma...
+ * Serving Flask app "server" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+unable to import 'smart_open.gcs', disabling that module
+kmeans loaded
+modelg50 loaded
+in app
+loading dictionary...
+loading words lemma...
+ * Serving Flask app "server" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+/home/ubuntu/website_cat_api/venv/lib/python3.6/site-packages/sklearn/base.py:318: UserWarning: Trying to unpickle estimator MiniBatchKMeans from version 0.23.0 when using version 0.22.2.post1. This might lead to breaking code or invalid results. Use at your own risk.
+  UserWarning)
+unable to import 'smart_open.gcs', disabling that module
+kmeans loaded
+modelg50 loaded
+in app
+loading dictionary...
+loading words lemma...
+ * Serving Flask app "server" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+209.17.96.146 - - [17/May/2020 01:17:13] "[37mGET / HTTP/1.1[0m" 200 -
+209.17.97.18 - - [17/May/2020 04:16:02] "[37mGET / HTTP/1.0[0m" 200 -
+/home/ubuntu/website_cat_api/venv/lib/python3.6/site-packages/sklearn/base.py:318: UserWarning: Trying to unpickle estimator MiniBatchKMeans from version 0.23.0 when using version 0.22.2.post1. This might lead to breaking code or invalid results. Use at your own risk.
+  UserWarning)
+unable to import 'smart_open.gcs', disabling that module
+kmeans loaded
+modelg50 loaded
+in app
+loading dictionary...
+loading words lemma...
+ * Serving Flask app "server" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+27.56.227.196 - - [17/May/2020 04:42:45] "[37mGET / HTTP/1.1[0m" 200 -
+27.56.227.196 - - [17/May/2020 04:42:47] "[37mGET /favicon.ico HTTP/1.1[0m" 200 -
+/home/ubuntu/website_cat_api/venv/lib/python3.6/site-packages/sklearn/base.py:318: UserWarning: Trying to unpickle estimator MiniBatchKMeans from version 0.23.0 when using version 0.22.2.post1. This might lead to breaking code or invalid results. Use at your own risk.
+  UserWarning)
+unable to import 'smart_open.gcs', disabling that module
+kmeans loaded
+modelg50 loaded
+in app
+loading dictionary...
+loading words lemma...
+ * Serving Flask app "server" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+/home/ubuntu/website_cat_api/venv/lib/python3.6/site-packages/sklearn/base.py:318: UserWarning: Trying to unpickle estimator MiniBatchKMeans from version 0.23.0 when using version 0.22.2.post1. This might lead to breaking code or invalid results. Use at your own risk.
+  UserWarning)
+unable to import 'smart_open.gcs', disabling that module
+kmeans loaded
+modelg50 loaded
+in app
+loading dictionary...
+loading words lemma...
+ * Serving Flask app "server" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+/home/ubuntu/website_cat_api/venv/lib/python3.6/site-packages/sklearn/base.py:318: UserWarning: Trying to unpickle estimator MiniBatchKMeans from version 0.23.0 when using version 0.22.2.post1. This might lead to breaking code or invalid results. Use at your own risk.
+  UserWarning)
+unable to import 'smart_open.gcs', disabling that module
+kmeans loaded
+modelg50 loaded
+in app
+loading dictionary...
+loading words lemma...
+ * Serving Flask app "server" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+/home/ubuntu/website_cat_api/venv/lib/python3.6/site-packages/sklearn/base.py:318: UserWarning: Trying to unpickle estimator MiniBatchKMeans from version 0.23.0 when using version 0.22.2.post1. This might lead to breaking code or invalid results. Use at your own risk.
+  UserWarning)
+unable to import 'smart_open.gcs', disabling that module
+kmeans loaded
+modelg50 loaded
+in app
+loading dictionary...
+loading words lemma...
+ * Serving Flask app "server" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+27.56.227.196 - - [17/May/2020 06:36:05] "[37mGET / HTTP/1.1[0m" 200 -
+27.56.227.196 - - [17/May/2020 06:36:07] "[37mGET /favicon.ico HTTP/1.1[0m" 200 -

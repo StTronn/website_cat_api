@@ -1,0 +1,15 @@
+kmeans loaded
+modelg50 loaded
+in app
+loading search engine
+loaded search engine
+sent vectorizer function called
+data fetched..
+calculating..
+fetching top sites...
+[{'url': 'https://google.com', 'rank': 1.0}, {'url': 'https://microsoft.com', 'rank': 2.0}, {'url': 'https://netflix.com', 'rank': 3.0}, {'url': 'https://facebook.com', 'rank': 4.0}, {'url': 'https://doubleclick.net', 'rank': 5.0}, {'url': 'https://live.com', 'rank': 6.0}, {'url': 'https://youtube.com', 'rank': 7.0}, {'url': 'https://fbcdn.net', 'rank': 8.0}, {'url': 'https://google-analytics.com', 'rank': 9.0}, {'url': 'https://apple.com', 'rank': 10.0}, {'url': 'https://skype.com', 'rank': 11.0}, {'url': 'https://bing.com', 'rank': 12.0}, {'url': 'http://amazonaws.com', 'rank': 13.0}, {'url': 'https://googlesyndication.com', 'rank': 14.0}, {'url': 'https://office365.com', 'rank': 15.0}, {'url': 'https://digicert.com', 'rank': 16.0}, {'url': 'https://office.com', 'rank': 17.0}, {'url': 'https://msn.com', 'rank': 18.0}, {'url': 'https://windows.net', 'rank': 19.0}, {'url': 'https://yahoo.com', 'rank': 20.0}]
+ * Serving Flask app "server" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off

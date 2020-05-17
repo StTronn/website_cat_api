@@ -138,3 +138,7 @@ dmypy.json
 cython_debug/
 #other files 
 GoogleNews-vectors-negative300.bin.gz
+.*.db
+.*.swp
+web.db
+database/
